@@ -55,7 +55,7 @@ def main():
     parser.add_argument("-o", "--output", help="Output path", default=None)
 
     args = parser.parse_args()
-
+    
     cg = CallGraphGenerator(
         args.entry_point, args.package, args.max_iter, args.operation
     )

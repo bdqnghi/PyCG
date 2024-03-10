@@ -131,7 +131,12 @@ class CallGraphGenerator(object):
             input_pkg = self.package
             input_mod = self._get_mod_name(entry_point, input_pkg)
             input_file = os.path.abspath(entry_point)
-
+            
+            # print("entry_point :", entry_point)
+            # print("input_pkg : ", input_pkg)
+            # print("input_mod : ", input_mod)
+            # print("input_file : ", input_file)
+            # print("Condition : ", entry_point.endswith(".py"))
             if not input_mod:
                 continue
 
@@ -159,6 +164,12 @@ class CallGraphGenerator(object):
                     self.remove_import_hooks()
 
     def analyze(self):
+        filtered_entry_points = []
+        for entry_point in self.entry_points:
+            if os.path.exists(entry_point) and os.path.isfile(entry_point) and entry_point.endswith(".py"):
+                filtered_entry_points.append(entry_point)
+                
+        self.entry_points = filtered_entry_points
         self.do_pass(
             PreProcessor,
             True,
